@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 function compressImage($source, $destination, $quality = 75)
 {
     $info = getimagesize($source);
-    if ($info['mime'] == 'image/jpeg')
+    if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/jpg')
         $image = imagecreatefromjpeg($source);
     elseif ($info['mime'] == 'image/png')
         $image = imagecreatefrompng($source);
