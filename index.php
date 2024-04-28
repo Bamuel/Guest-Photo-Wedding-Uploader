@@ -10,8 +10,9 @@ $json_data = json_decode($json, true);
 <head>
     <meta charset="utf-8">
     <title><?= $json_data['title'] ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -53,7 +54,9 @@ $json_data = json_decode($json, true);
         }
     </style>
     <link href="fileinput/fileinput.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="fileinput/themes/explorer-fa6/theme.min.css">
 </head>
 <body>
@@ -64,8 +67,10 @@ $json_data = json_decode($json, true);
 </div>
 <div class="container">
     <br>
-    <p class="lead">Hello all you lovely people, we are collecting photos that people took at our wedding, so if you have pictures please add them here!</p>
-    <p>Please add your name, so we know who they have come from. Upload your pictures with the file picker below! (you can add multiple pictures at the same time)</p>
+    <p class="lead">Hello all you lovely people, we are collecting photos that people took at our wedding, so if you
+        have pictures please add them here!</p>
+    <p>Please add your name, so we know who they have come from. Upload your pictures with the file picker below! (you
+        can add multiple pictures at the same time)</p>
     <form action="#" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Name:</label>
@@ -78,16 +83,49 @@ $json_data = json_decode($json, true);
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<br>
+<hr style="width: 80%; margin: auto;">
+<br>
+<!-- Gallery -->
+<div class="container">
+    <h2>Gallery</h2>
+    <div class="row">
+        <?php
+        //check if directory exists if not then create it (savedimages)
+        //read file in savedimages
+        if (!file_exists('savedimages')) {
+            mkdir('savedimages', 0777, true);
+        }
+        if (file_exists('savedimages')) {
+            $files = scandir('savedimages');
+            $x = 0;
+            foreach ($files as $file) {
+                if ($file != '.' && $file != '..') {
+                    echo '<div class="col-lg-4 col-md-12 mb-4 mb-lg-0">' . PHP_EOL;
+                    echo '<img src="savedimages/' . $file . '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" alt="Boat on Calm Water">' . PHP_EOL;
+                    echo '</div>' . PHP_EOL;
+                }
+                $x++;
+            }
+        }
+        ?>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+        integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
 <script src="fileinput/fileinput.min.js"></script>
 <script src="fileinput/themes/explorer-fa6/theme.min.js"></script>
 <script>
     $(document).ready(function () {
         $("#files").fileinput({
             theme: "explorer-fa6",
-            uploadUrl: "upload.php",
             allowedFileTypes: ['image', 'video'],
 
             showRemove: false,
@@ -111,6 +149,30 @@ $json_data = json_decode($json, true);
             showUploadedThumbs: false,
             dropZoneEnabled: false,
 
+        });
+
+        //on submit form, upload files
+        $('form').submit(function (e) {
+            e.preventDefault();
+            console.log('samuel got here');
+            var images = $('#files')[0].files;
+            //ajax to upload.php
+            var formData = new FormData();
+            formData.append('name', $('#name').val());
+            for (var i = 0; i < images.length; i++) {
+                formData.append('file[]', images[i]);
+            }
+            $.ajax({
+                url: 'upload.php',
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    console.log(response);
+                    location.reload();
+                }
+            });
         });
     });
 </script>
