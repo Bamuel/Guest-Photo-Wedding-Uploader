@@ -29,12 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Set the destination path for the uploaded file
                 $newFilePath = $uploadDir . $fileName;
 
-                // Move the uploaded file to the destination directory
-                if (move_uploaded_file($tmpFilePath, $newFilePath)) {
-                    echo "File uploaded successfully: $fileName\n";
-                } else {
-                    echo "Error uploading file: $fileName\n";
-                }
+
+                // Compress the image before uploading
+                compressImage($tmpFilePath, $newFilePath);
+                // Output success message
+                echo "File uploaded successfully: $fileName\n";
+
             }
         }
     } else {
@@ -43,4 +43,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo "Invalid request method";
 }
+
+function compressImage($source, $destination, $quality = 75)
+{
+    $info = getimagesize($source);
+    if ($info['mime'] == 'image/jpeg')
+        $image = imagecreatefromjpeg($source);
+    elseif ($info['mime'] == 'image/png')
+        $image = imagecreatefrompng($source);
+    elseif ($info['mime'] == 'image/gif')
+        $image = imagecreatefromgif($source);
+    else
+        return false;
+
+    // Save the compressed image
+    imagejpeg($image, $destination, $quality);
+
+    // Free up memory
+    imagedestroy($image);
+
+    return true;
+}
+
 ?>
