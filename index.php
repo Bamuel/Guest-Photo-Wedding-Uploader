@@ -184,7 +184,7 @@ $json_data = json_decode($json, true);
                 var name = $('#name').val();
                 return {name: name};
             },
-            maxFileSize: 51200, // 50MB
+            maxFileSize: 10240, // 10 MB limit
             showRemove: false,
             showUpload: true,
             showDownload: false,
