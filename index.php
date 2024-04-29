@@ -51,6 +51,25 @@ $json_data = json_decode($json, true);
                 font-size: 16px;
             }
         }
+
+        .image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-details {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(255, 255, 255, 0.75);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .user-details i {
+            margin-right: 5px;
+        }
     </style>
     <link href="fileinput/fileinput.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -70,6 +89,10 @@ $json_data = json_decode($json, true);
         can add multiple pictures at the same time)</p>
     <form action="#" method="post" enctype="multipart/form-data">
         <div class="form-group">
+            <label for="name">Your Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
             <label for="photo">Upload Photo:</label><br>
             <input id="files" type="file" name="files" multiple accept="image/*,video/*">
         </div>
@@ -83,21 +106,40 @@ $json_data = json_decode($json, true);
     <h2>Gallery</h2>
     <div class="row">
         <?php
-        //check if directory exists if not then create it (savedimages)
-        //read file in savedimages
         if (!file_exists('savedimages')) {
-            mkdir('savedimages', 0777, true);
+            @mkdir('savedimages', 0777, true);
         }
         if (file_exists('savedimages')) {
+            // Get files and their timestamps
+            $filesWithTimestamp = [];
             $files = scandir('savedimages');
-            $x = 0;
             foreach ($files as $file) {
                 if ($file != '.' && $file != '..') {
-                    echo '<div class="col-lg-4 col-md-12 mb-4 mb-lg-0">' . PHP_EOL;
-                    echo '<img src="savedimages/' . $file . '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;">' . PHP_EOL;
-                    echo '</div>' . PHP_EOL;
+                    $filePath = 'savedimages/' . $file;
+                    $fileTimestamp = filemtime($filePath); // Get the file's last modified timestamp
+                    $filesWithTimestamp[$file] = $fileTimestamp;
                 }
-                $x++;
+            }
+
+            // Sort files by timestamp
+            arsort($filesWithTimestamp); // Sort in descending order based on timestamp
+
+            // Display files
+            foreach ($filesWithTimestamp as $file => $timestamp) {
+                $fileName = pathinfo($file, PATHINFO_FILENAME);
+                $userName = substr($fileName, 0, strpos($fileName, '_'));
+                echo '<div class="col-lg-4 col-md-12 mb-4 mb-lg-0">' . PHP_EOL;
+                echo '<div class="image-container position-relative">' . PHP_EOL;
+                echo '<img src="savedimages/' . $file . '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;">' . PHP_EOL;
+                echo '<div class="user-details">' . PHP_EOL;
+                if ($userName === 'Anonymous' || $userName === "") {
+                    echo '<i class="fas fa-user-secret fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
+                }
+                else {
+                    echo '<i class="fas fa-user fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
+                }
+                echo '</div>' . PHP_EOL;
+                echo '</div>' . PHP_EOL;
             }
         }
         ?>
@@ -116,6 +158,10 @@ $json_data = json_decode($json, true);
             theme: "explorer-fa6",
             allowedFileTypes: ['image', 'video'],
             uploadUrl: 'upload.php',
+            uploadExtraData: function () {
+                var name = $('#name').val();
+                return {name: name};
+            },
             showRemove: false,
             showUpload: true,
             showDownload: false,
@@ -135,7 +181,7 @@ $json_data = json_decode($json, true);
             showUploadedThumbs: false,
             dropZoneEnabled: false
         });
-        $('#files').on('filebatchuploadcomplete', function(event, preview, config, tags, extraData) {
+        $('#files').on('filebatchuploadcomplete', function (event, preview, config, tags, extraData) {
             location.reload();
         });
     });

@@ -6,6 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['files'])) {
         // Specify the directory where the uploaded files will be saved
         $uploadDir = 'savedimages/';
+        $name = $_POST['name'] ?? 'Anonymous';
+        $name = $name === '' ? 'Anonymous' : $name;
 
         // Check if the directory exists, if not, create it
         if (!file_exists($uploadDir)) {
@@ -18,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if a file was actually uploaded
         if ($tmpFilePath != "") {
             // Generate a unique filename to avoid overwriting existing files
-            $fileName = uniqid() . '_' . $_FILES['files']['name'];
+            $fileName = $name . '_' . uniqid() . '_' . $_FILES['files']['name'];
 
             // Set the destination path for the uploaded file
             $newFilePath = $uploadDir . $fileName;
