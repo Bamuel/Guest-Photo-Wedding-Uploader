@@ -94,7 +94,7 @@ $json_data = json_decode($json, true);
             foreach ($files as $file) {
                 if ($file != '.' && $file != '..') {
                     echo '<div class="col-lg-4 col-md-12 mb-4 mb-lg-0">' . PHP_EOL;
-                    echo '<img src="savedimages/' . $file . '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" alt="Boat on Calm Water">' . PHP_EOL;
+                    echo '<img src="savedimages/' . $file . '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;">' . PHP_EOL;
                     echo '</div>' . PHP_EOL;
                 }
                 $x++;
