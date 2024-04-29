@@ -124,10 +124,20 @@ $json_data = json_decode($json, true);
             // Sort files by timestamp
             arsort($filesWithTimestamp); // Sort in descending order based on timestamp
 
+            // Check if the user agent is from an Apple device (Mac, iPhone, iPad). This is used to display .mov files only on Apple devices.
+            $isAppleDevice = strpos($_SERVER['HTTP_USER_AGENT'], 'Macintosh') !== false
+                || strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== false
+                || strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false;
+
             // Display files
             foreach ($filesWithTimestamp as $file => $timestamp) {
+                $fileExtension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                 $fileName = pathinfo($file, PATHINFO_FILENAME);
                 $userName = substr($fileName, 0, strpos($fileName, '_'));
+                if ($fileExtension === 'mov' && !$isAppleDevice) {
+                    // Skip .mov files if the user agent is not from an Apple device
+                    continue;
+                }
                 echo '<div class="col-lg-4 col-md-4 col-sm-6 col-6">' . PHP_EOL;
                 echo '<div class="image-container position-relative">' . PHP_EOL;
                 echo '<img src="savedimages/' . $file . '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;">' . PHP_EOL;
@@ -162,6 +172,7 @@ $json_data = json_decode($json, true);
                 var name = $('#name').val();
                 return {name: name};
             },
+            maxFileSize: 20480, // 20 MB
             showRemove: false,
             showUpload: true,
             showDownload: false,
