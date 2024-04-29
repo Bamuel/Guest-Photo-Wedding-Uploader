@@ -143,10 +143,13 @@ $json_data = json_decode($json, true);
                 echo '<img src="savedimages/' . $file . '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;">' . PHP_EOL;
                 echo '<div class="user-details">' . PHP_EOL;
                 if ($userName === 'Anonymous' || $userName === "") {
-                    echo '<i class="fas fa-user-secret fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
+                    echo '<i class="fa-solid fa-user-secret fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
+                }
+                else if ($userName === 'test'){
+                    echo '<i class="fa-solid fa-terminal fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
                 }
                 else {
-                    echo '<i class="fas fa-user fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
+                    echo '<i class="fa-solid fa-user fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
                 }
                 echo '</div>' . PHP_EOL;
                 echo '</div>' . PHP_EOL;
