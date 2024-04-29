@@ -128,7 +128,7 @@ $json_data = json_decode($json, true);
             foreach ($filesWithTimestamp as $file => $timestamp) {
                 $fileName = pathinfo($file, PATHINFO_FILENAME);
                 $userName = substr($fileName, 0, strpos($fileName, '_'));
-                echo '<div class="col-lg-4 col-md-12 mb-4 mb-lg-0">' . PHP_EOL;
+                echo '<div class="col-lg-4 col-md-4 col-sm-6 col-6">' . PHP_EOL;
                 echo '<div class="image-container position-relative">' . PHP_EOL;
                 echo '<img src="savedimages/' . $file . '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;">' . PHP_EOL;
                 echo '<div class="user-details">' . PHP_EOL;
