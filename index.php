@@ -83,10 +83,9 @@ $json_data = json_decode($json, true);
 </div>
 <div class="container">
     <br>
-    <p class="lead">Hello all you lovely people, we are collecting photos that people took at our wedding, so if you
-        have pictures please add them here!</p>
-    <p>Please add your name, so we know who they have come from. Upload your pictures with the file picker below! (you
-        can add multiple pictures at the same time)</p>
+    <p class="lead">Hello everyone!</p>
+    <p>We're gathering all the wonderful memories captured at our wedding. If you have any photos, please share them with us here!</p>
+    <p style="font-size: small">Please include your name so we can give credit. You can upload multiple pictures simultaneously using the file picker below. Each file should be no larger than 10MB.</p>
     <form action="#" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Your Name:</label>
