@@ -124,28 +124,37 @@ $json_data = json_decode($json, true);
             // Sort files by timestamp
             arsort($filesWithTimestamp); // Sort in descending order based on timestamp
 
-            // Check if the user agent is from an Apple device (Mac, iPhone, iPad). This is used to display .mov files only on Apple devices.
-            $isAppleDevice = strpos($_SERVER['HTTP_USER_AGENT'], 'Macintosh') !== false
-                || strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== false
-                || strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false;
+            // Check if the user agent is from an Apple device (Mac, iPhone, iPad). This is used to display video files only on Apple devices as <img>
+            $isAppleDevice = strpos($_SERVER['HTTP_USER_AGENT'], 'Macintosh') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false;
 
             // Display files
             foreach ($filesWithTimestamp as $file => $timestamp) {
                 $fileExtension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                 $fileName = pathinfo($file, PATHINFO_FILENAME);
                 $userName = substr($fileName, 0, strpos($fileName, '_'));
-                if ($fileExtension === 'mov' && !$isAppleDevice) {
-                    // Skip .mov files if the user agent is not from an Apple device
-                    continue;
-                }
                 echo '<div class="col-lg-4 col-md-4 col-sm-6 col-6">' . PHP_EOL;
                 echo '<div class="image-container position-relative">' . PHP_EOL;
-                echo '<img src="savedimages/' . $file . '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;">' . PHP_EOL;
+
+                if (in_array($fileExtension, array('mov', 'mp4', 'avi', 'webm', 'mkv')) && !$isAppleDevice) {
+                    // Check if the file is a video and if it is not an Apple device
+                    echo '<div id="videoContainer_' . $fileName . '" class="videoBackground">' . PHP_EOL;
+                    echo '<video class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" preload="none" controls muted>' . PHP_EOL;
+                    echo '<source src="savedimages/' . $file . '" type="video/' . $fileExtension . '" onerror="document.getElementById(\'videoContainer_' . $fileName . '\').style.display=\'none\'; document.getElementById(\'videoError_' . $fileName . '\').style.display=\'block\'">' . PHP_EOL;
+                    echo '</video>' . PHP_EOL;
+                    echo '</div>' . PHP_EOL;
+                    //button to download video instead.
+                    echo '<div id="videoError_' . $fileName . '" class="w-100 shadow-1-strong rounded mb-4" style="display: none; color: red; background-color: #333333"><br><br><span style="margin-left: 10px">Your browser does not support the iOS format Videos.</span><div style="margin-left: 10px" class="btn btn-sm btn-success" onclick="window.open(\'savedimages/' . $file . '\', \'_blank\');"><i class="fa-solid fa-download fa-fw"></i> Download</div><br><br></div>' . PHP_EOL;
+                }
+                else {
+                    //One day Chrome/Edge/Firefox will support video in img tags. Until then, we'll just show a video.
+                    echo '<img src="savedimages/' . $file . '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" ondblclick="window.open(\'savedimages/' . $file . '\', \'_blank\');">' . PHP_EOL;
+                }
+
                 echo '<div class="user-details">' . PHP_EOL;
                 if ($userName === 'Anonymous' || $userName === "") {
                     echo '<i class="fa-solid fa-user-secret fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
                 }
-                else if ($userName === 'test'){
+                else if ($userName === 'test') {
                     echo '<i class="fa-solid fa-terminal fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
                 }
                 else {
@@ -175,7 +184,7 @@ $json_data = json_decode($json, true);
                 var name = $('#name').val();
                 return {name: name};
             },
-            maxFileSize: 20480, // 20 MB
+            maxFileSize: 51200, // 50MB
             showRemove: false,
             showUpload: true,
             showDownload: false,
