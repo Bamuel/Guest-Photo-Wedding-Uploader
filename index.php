@@ -85,7 +85,7 @@ $json_data = json_decode($json, true);
     <br>
     <p class="lead">Hello everyone!</p>
     <p>We're gathering all the wonderful memories captured at our wedding. If you have any photos, please share them with us here!</p>
-    <p style="font-size: small">Please include your name so we can give credit. You can upload multiple pictures simultaneously using the file picker below. Each file should be no larger than 10MB.</p>
+    <p style="font-size: small">Please include your name so we can give credit. You can upload multiple pictures simultaneously using the file picker below. Videos may take a while to appear after uploading due to compression.</p>
     <form action="#" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Your Name:</label>
@@ -115,8 +115,10 @@ $json_data = json_decode($json, true);
             foreach ($files as $file) {
                 if ($file != '.' && $file != '..') {
                     $filePath = 'savedimages/' . $file;
-                    $fileTimestamp = filemtime($filePath); // Get the file's last modified timestamp
-                    $filesWithTimestamp[$file] = $fileTimestamp;
+                    if (filesize($filePath) >= 5 * 1024) { // Check if filesize is at least 5KB
+                        $fileTimestamp = filemtime($filePath); // Get the file's last modified timestamp
+                        $filesWithTimestamp[$file] = $fileTimestamp;
+                    }
                 }
             }
 
@@ -183,7 +185,7 @@ $json_data = json_decode($json, true);
                 var name = $('#name').val();
                 return {name: name};
             },
-            maxFileSize: 10240, // 10 MB limit
+            maxFileSize: 81920, // 80 MB limit
             showRemove: false,
             showUpload: true,
             showDownload: false,
