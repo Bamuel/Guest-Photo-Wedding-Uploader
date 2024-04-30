@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $uploadDir = 'savedimages/';
         $originalVideoDir = 'original_videos/';
         $name = $_POST['name'] ?? 'Anonymous';
-        $name = $name === '' ? 'Anonymous' : $name;
+        $name = $name === '' ? 'Anonymous' : trim($name);
 
         // Check if the directory exists, if not, create it
         if (!file_exists($uploadDir)) {
