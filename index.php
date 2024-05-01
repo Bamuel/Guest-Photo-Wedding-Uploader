@@ -11,6 +11,18 @@ $json_data = json_decode($json, true);
     <meta charset="utf-8">
     <title><?= strip_tags($json_data['title']) ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="author" content="Bamuel, me@bamuel.com">
+    <meta http-equiv="Content-Language" content="en-au">
+    <meta name="description" content="We're gathering all the wonderful memories captured at our wedding. If you have any photos, please share them with us here!">
+    <meta property="og:title" content="<?= strip_tags($json_data['title']) ?>"/>
+    <meta property="og:image" content="<?= $json_data['imageBanner'] ?>"/>
+    <meta property="og:description" content="We're gathering all the wonderful memories captured at our wedding. If you have any photos, please share them with us here!"/>
+    <meta name="twitter:title" content="<?= strip_tags($json_data['title']) ?>">
+    <meta name="twitter:image" content="<?= $json_data['imageBanner'] ?>"/>
+    <meta name="robots" content="nofollow">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         body {
