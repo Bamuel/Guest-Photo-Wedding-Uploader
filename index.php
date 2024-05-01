@@ -155,8 +155,17 @@ $json_data = json_decode($json, true);
                 if ($userName === 'Anonymous' || $userName === "") {
                     echo '<i class="fa-solid fa-user-secret fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
                 }
-                else if ($userName === 'test') {
+                else if (strtolower($userName) === 'test') {
                     echo '<i class="fa-solid fa-terminal fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
+                }
+                else if (in_array(strtolower($userName), $json_data['ninja'], true)) {
+                    echo '<i class="fa-solid fa-user-ninja fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
+                }
+                else if (in_array(strtolower($userName), $json_data['doctor'], true)) {
+                    echo '<i class="fa-solid fa-user-doctor fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
+                }
+                else if (in_array(strtolower($userName), $json_data['injured'], true)) {
+                    echo '<i class="fa-solid fa-user-injured fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
                 }
                 else {
                     echo '<i class="fa-solid fa-user fa-lg"></i>' . $userName . '</div>' . PHP_EOL;

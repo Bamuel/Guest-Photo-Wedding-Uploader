@@ -1,4 +1,27 @@
 {
   "title": "Samuel and Emma <br>Wedding Photo Collection",
-  "imageBanner": "img/bg.png"
+  "imageBanner": "img/bg.png",
+  "ninja": [
+    "efti",
+    "eftihios",
+    "efti",
+    "cam",
+    "camilla",
+    "cameron",
+    "hexdro",
+    "samuel",
+    "peter"
+  ],
+  "doctor": [
+    "art",
+    "artyom",
+    "artem",
+    "bella"
+  ],
+  "injured": [
+    "sofia",
+    "soffia",
+    "sofffia",
+    "luba"
+  ]
 }
