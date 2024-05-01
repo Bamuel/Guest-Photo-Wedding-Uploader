@@ -36,6 +36,15 @@ Welcome to the Guest Photo Wedding Uploader! This is a simple PHP website design
 
 If you'd like to contribute to the Guest Photo Wedding Uploader project, feel free to fork the repository and submit a pull request with your proposed changes.
 
+## HandBrakeCLI cheatlist
+Anything with incompatible ram will crash HandBrake
+- 1 GB for transcoding standard definition video (480p/576p)
+- 2 GB for transcoding high definition video (720p/1080p)
+- 6 GB or more for transcoding ultra high definition video (2160p 4K)
+
+Best to let a separate server handle the transcoding, using sshfs to mount the upload directory to the transcoding server.
+This will prevent the web server from crashing/lagging due to transcoding.
+
 ---
 
 Thank you for using Guest Photo Wedding Uploader! If you have any questions or feedback, please don't hesitate to contact us.

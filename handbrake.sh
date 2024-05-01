@@ -18,7 +18,7 @@ for file in $originalVideoDir*; do
             # Convert the video file using HandBrakeCLI
             convertedFileName=$(basename "$file" ."$fileExtension").mp4
             convertedFilePath="$uploadDir$convertedFileName"
-            HandBrakeCLI -i "$file" -o "$convertedFilePath" --preset="Fast 720p30"
+            HandBrakeCLI -i "$file" -o "$convertedFilePath" --preset="Fast 480p30"
 
             # Remove the original video file after conversion
             mv "$file" "$backupDir"
