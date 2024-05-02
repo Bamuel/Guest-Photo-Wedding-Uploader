@@ -150,8 +150,8 @@ $json_data = json_decode($json, true);
 
                 if (in_array($fileExtension, array('mov', 'mp4', 'avi', 'webm', 'mkv')) && !$isAppleDevice) {
                     // Check if the file is a video and if it is not an Apple device
-                    echo '<div id="videoContainer_' . $fileName . '" class="videoBackground">' . PHP_EOL;
-                    echo '<video class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" preload="none" controls muted>' . PHP_EOL;
+                    echo '<div id="videoContainer_' . $fileName . '" class="videoBackground" ondblclick="window.open(\'savedimages/' . $file . '\', \'_blank\');">' . PHP_EOL;
+                    echo '<video class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" muted autoplay loop>' . PHP_EOL;
                     echo '<source src="savedimages/' . $file . '" type="video/' . $fileExtension . '" onerror="document.getElementById(\'videoContainer_' . $fileName . '\').style.display=\'none\'; document.getElementById(\'videoError_' . $fileName . '\').style.display=\'block\'">' . PHP_EOL;
                     echo '</video>' . PHP_EOL;
                     echo '</div>' . PHP_EOL;
