@@ -24,25 +24,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if a file was actually uploaded
         if ($tmpFilePath != "") {
             $fileExtension = strtolower(pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION));
-            // Generate a unique filename to avoid overwriting existing files
-            $fileName = $name . '_' . uniqid() . '_' . $_FILES['files']['name'];
+            //Check if the file extension is allowed
+            if (in_array($fileExtension, array('jpg', 'jpeg', 'png', 'gif', 'webp', 'eps', 'bmp', 'mov', 'mp4', 'avi', 'wmv', 'flv', 'webm', 'mkv'))) {
 
-            // Set the destination path for the uploaded file
-            $newFilePath = $uploadDir . $fileName;
+                // Generate a unique filename to avoid overwriting existing files
+                $fileName = $name . '_' . uniqid() . '_' . $_FILES['files']['name'];
+                $newFilePath = $uploadDir . $fileName;
 
-            // Move the uploaded file to the destination directory
-            if (move_uploaded_file($tmpFilePath, $newFilePath)) {
-
-                if (in_array($fileExtension, array('mov', 'mp4', 'avi', 'webm', 'mkv'))) {
-                    // Move the original video to the original_videos directory
-                    $originalFilePath = $originalVideoDir . $fileName;
-                    rename($newFilePath, $originalFilePath);
-                    //A conversion will be handled by a separate script handbrake.sh
+                // Move the uploaded file to the destination directory
+                if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                    if (in_array($fileExtension, array('mov', 'mp4', 'avi', 'webm', 'mkv'))) {
+                        // Move the original video to the original_videos directory
+                        $originalFilePath = $originalVideoDir . $fileName;
+                        rename($newFilePath, $originalFilePath);
+                        //A conversion will be handled by a separate script handbrake.sh
+                    }
+                    echo json_encode(['status' => 'success', 'message' => 'File uploaded successfully']);
                 }
-                echo json_encode(['status' => 'success', 'message' => 'File uploaded successfully']);
+                else {
+                    echo json_encode(['status' => 'error', 'message' => 'Failed to upload file']);
+                }
             }
             else {
-                echo json_encode(['status' => 'error', 'message' => 'Failed to upload file']);
+                echo json_encode(['status' => 'error', 'message' => 'Invalid file extension']);
             }
         }
     }

@@ -115,78 +115,8 @@ $json_data = json_decode($json, true);
 <!-- Gallery -->
 <div class="container">
     <h2>Gallery</h2>
-    <div class="row" data-masonry='{"percentPosition": true, "animate": false}'>
-        <?php
-        if (!file_exists('savedimages')) {
-            @mkdir('savedimages', 0777, true);
-        }
-        if (file_exists('savedimages')) {
-            // Get files and their timestamps
-            $filesWithTimestamp = [];
-            $files = scandir('savedimages');
-            foreach ($files as $file) {
-                if ($file != '.' && $file != '..') {
-                    $filePath = 'savedimages/' . $file;
-                    if (filesize($filePath) >= 5 * 1024) { // Check if filesize is at least 5KB
-                        $fileTimestamp = filemtime($filePath); // Get the file's last modified timestamp
-                        $filesWithTimestamp[$file] = $fileTimestamp;
-                    }
-                }
-            }
-
-            // Sort files by timestamp
-            arsort($filesWithTimestamp); // Sort in descending order based on timestamp
-
-            // Check if the user agent is from an Apple device (Mac, iPhone, iPad). This is used to display video files only on Apple devices as <img>
-            $isAppleDevice = strpos($_SERVER['HTTP_USER_AGENT'], 'Macintosh') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false;
-
-            // Display files
-            foreach ($filesWithTimestamp as $file => $timestamp) {
-                $fileExtension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                $fileName = pathinfo($file, PATHINFO_FILENAME);
-                $userName = substr($fileName, 0, strpos($fileName, '_'));
-                echo '<div class="col-lg-4 col-md-4 col-sm-6 col-6">' . PHP_EOL;
-                echo '<div class="image-container position-relative">' . PHP_EOL;
-
-                if (in_array($fileExtension, array('mov', 'mp4', 'avi', 'webm', 'mkv')) && !$isAppleDevice) {
-                    // Check if the file is a video and if it is not an Apple device
-                    echo '<div id="videoContainer_' . $fileName . '" class="videoBackground" ondblclick="window.open(\'savedimages/' . $file . '\', \'_blank\');">' . PHP_EOL;
-                    echo '<video class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" muted autoplay loop>' . PHP_EOL;
-                    echo '<source src="savedimages/' . $file . '" type="video/' . $fileExtension . '" onerror="document.getElementById(\'videoContainer_' . $fileName . '\').style.display=\'none\'; document.getElementById(\'videoError_' . $fileName . '\').style.display=\'block\'">' . PHP_EOL;
-                    echo '</video>' . PHP_EOL;
-                    echo '</div>' . PHP_EOL;
-                    //button to download video instead.
-                    echo '<div id="videoError_' . $fileName . '" class="w-100 shadow-1-strong rounded mb-4" style="display: none; color: red; background-color: #333333"><br><br><span style="margin-left: 10px">Your browser does not support the iOS format Videos.</span><div style="margin-left: 10px" class="btn btn-sm btn-success" onclick="window.open(\'savedimages/' . $file . '\', \'_blank\');"><i class="fa-solid fa-download fa-fw"></i> Download</div><br><br></div>' . PHP_EOL;
-                }
-                else {
-                    //One day Chrome/Edge/Firefox will support video in img tags. Until then, we'll just show a video.
-                    echo '<img src="savedimages/' . $file . '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" ondblclick="window.open(\'savedimages/' . $file . '\', \'_blank\');">' . PHP_EOL;
-                }
-
-                echo '<div class="user-details">' . PHP_EOL;
-                if ($userName === 'Anonymous' || $userName === "") {
-                    echo '<i class="fa-solid fa-user-secret fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
-                }
-                else if (strtolower($userName) === 'test') {
-                    echo '<i class="fa-solid fa-terminal fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
-                }
-                else if (in_array(strtolower($userName), $json_data['ninja'], true)) {
-                    echo '<i class="fa-solid fa-user-ninja fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
-                }
-                else if (in_array(strtolower($userName), $json_data['doctor'], true)) {
-                    echo '<i class="fa-solid fa-user-doctor fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
-                }
-                else if (in_array(strtolower($userName), $json_data['injured'], true)) {
-                    echo '<i class="fa-solid fa-user-injured fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
-                }
-                else {
-                    echo '<i class="fa-solid fa-user fa-lg"></i>' . $userName . '</div>' . PHP_EOL;
-                }
-                echo '</div>' . PHP_EOL;
-                echo '</div>' . PHP_EOL;
-            }
-        }
-        ?>
+    <div class="row" id="imageGallery" data-masonry='{"percentPosition": true}'>
+        <!-- Images will be loaded here -->
     </div>
 </div>
 
@@ -199,17 +129,71 @@ $json_data = json_decode($json, true);
 <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 <script>
     $(document).ready(function () {
-
         // Run initially after 500ms
         //This will re-layout the images after they've loaded, well constantly check every 1500ms.
         //This is needed for videos to display correctly in the masonry layout after they've loaded.
-        setTimeout(function() {
-            $('.row').masonry('layout');
+        setTimeout(function () {
+            $('#imageGallery').masonry('layout');
             // Run every 1.5 seconds after the initial run
-            setInterval(function() {
-                $('.row').masonry('layout');
+            setInterval(function () {
+                $('#imageGallery').masonry('layout');
             }, 1500);
         }, 500);
+
+
+        loadimages();
+        setInterval(function () {
+            loadimages();
+        }, 1000);
+
+        var loadedImages = [];
+        function loadimages(){
+            $.ajax({
+                url: 'load_images.php',
+                type: 'GET',
+                success: function (data) {
+                    //        $output[] = array(
+                    //            'file' => $file,
+                    //            'type' => $type,
+                    //            'icon' => $icon,
+                    //            'timestamp' => $timestamp,
+                    //            'userName' => $userName,
+                    //            'fileExtension' => $fileExtension);
+                    var images = JSON.parse(data);
+                    var output = '';
+                    $.each(images, function (key, value) {
+                        var fileName = value.file;
+                        if (!loadedImages.includes(fileName)) {
+                            var type = value.type;
+                            var fileIcon = value.icon;
+                            var timestamp = value.timestamp;
+                            var userName = value.userName;
+                            var fileExtension = value.fileExtension;
+                            html = '<div class="col-lg-4 col-md-4 col-sm-6 col-6">';
+                            html += '<div class="image-container position-relative">';
+                            if (type === 'video') {
+                                html += '<div id="videoContainer_' + fileName + '" class="videoBackground" ondblclick="window.open(\'savedimages/' + fileName + '\', \'_blank\');">';
+                                html += '<video class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" muted autoplay loop>';
+                                html += '<source src="savedimages/' + fileName + '" type="video/' + fileExtension + '" onerror="document.getElementById(\'videoContainer_' + fileName + '\').style.display=\'none\'; document.getElementById(\'videoError_' + fileName + '\').style.display=\'block\'">';
+                                html += '</video>';
+                                html += '</div>';
+                                html += '<div id="videoError_' + fileName + '" class="w-100 shadow-1-strong rounded mb-4" style="display: none; color: red; background-color: #333333"><br><br><span style="margin-left: 10px">Your browser does not support the iOS format Videos.</span><div style="margin-left: 10px" class="btn btn-sm btn-success" onclick="window.open(\'savedimages/' + fileName + '\', \'_blank\');"><i class="fa-solid fa-download fa-fw"></i> Download</div><br><br></div>';
+                            } else {
+                                html += '<img src="savedimages/' + fileName + '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" ondblclick="window.open(\'savedimages/' + fileName + '\', \'_blank\');">';
+                            }
+                            html += '<div class="user-details">';
+                            html += '<i class="' + fileIcon + '"></i>' + userName + '</div>';
+                            html += '</div>';
+                            html += '</div>';
+                            output += html;
+                            loadedImages.push(fileName);
+                        }
+                    });
+                    $('#imageGallery').prepend(output).masonry('reloadItems');
+                }
+            });
+        }
+
 
         $("#files").fileinput({
             theme: "explorer-fa6",
@@ -240,7 +224,8 @@ $json_data = json_decode($json, true);
             dropZoneEnabled: false
         });
         $('#files').on('filebatchuploadcomplete', function (event, preview, config, tags, extraData) {
-            location.reload();
+            loadimages();
+            $('#files').fileinput('clear');
         });
     });
 </script>
