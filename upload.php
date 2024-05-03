@@ -10,6 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = $_POST['name'] ?? 'Anonymous';
         $name = $name === '' ? 'Anonymous' : trim($name);
 
+        //remove special characters from name and allow spaces
+        $name = preg_replace('/[^A-Za-z0-9 ]/', '', $name);
+        //Converts the first character of each word in a string to uppercase
+        $name = ucwords(strtolower($name));
+
         // Check if the directory exists, if not, create it
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);
