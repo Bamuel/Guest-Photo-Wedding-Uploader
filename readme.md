@@ -2,6 +2,7 @@
 
 Welcome to the Guest Photo Wedding Uploader! This is a simple PHP website designed to facilitate the easy uploading of photos and videos for weddings or similar events. Users can upload their media files, which will be saved on the server and made previewable for easy sharing and viewing.
 
+
 ## Features
 
 - **Easy Upload**: Users can easily upload their photos and videos through a simple and intuitive interface.
@@ -26,6 +27,8 @@ Welcome to the Guest Photo Wedding Uploader! This is a simple PHP website design
 2. Access the website through your preferred web browser.
 3. Users can upload their photos and videos by following the on-screen instructions.
 4. Uploaded media files will be stored in the designated upload directory and made previewable for easy access.
+
+![image](https://github.com/Bamuel/Guest-Photo-Wedding-Uploader/assets/6744113/a394d1f0-2a61-49be-b5d4-9bc1dd4aeb54)
 
 ## Troubleshooting
 
