@@ -95,9 +95,9 @@ $json_data = json_decode($json, true);
 </div>
 <div class="container">
     <br>
-    <p class="lead">Hello everyone!</p>
-    <p><?= strip_tags($json_data['description']) ?></p>
-    <p style="font-size: small"><?= strip_tags($json_data['description2']) ?></p>
+    <p class="lead"><?= $json_data['lead'] ?></p>
+    <p><?= $json_data['description'] ?></p>
+    <p style="font-size: small"><?= $json_data['description2'] ?></p>
     <form action="#" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Your Name:</label>
@@ -152,6 +152,10 @@ $json_data = json_decode($json, true);
             $.ajax({
                 url: 'load_images.php',
                 type: 'GET',
+                beforeSend: function () {
+                    //this will make it flow abit better.
+                    $('#imageGallery').masonry('layout');
+                },
                 success: function (data) {
                     //        $output[] = array(
                     //            'file' => $file,
