@@ -1,6 +1,8 @@
 {
   "title": "Samuel and Emma <br>Wedding Photo Collection",
   "imageBanner": "img/bg.png",
+  "description": "We're gathering all the wonderful memories captured at our wedding. If you have any photos, please share them with us here!",
+  "description2": "Please include your name so we can give credit. You can upload multiple pictures simultaneously using the file picker below. Videos may take a while to appear after uploading due to compression.",
   "ninja": [
     "efti",
     "eftihios",

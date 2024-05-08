@@ -15,10 +15,10 @@ $json_data = json_decode($json, true);
     <meta name="keywords" content="">
     <meta name="author" content="Bamuel, me@bamuel.com">
     <meta http-equiv="Content-Language" content="en-au">
-    <meta name="description" content="We're gathering all the wonderful memories captured at our wedding. If you have any photos, please share them with us here!">
+    <meta name="description" content="<?= strip_tags($json_data['description']) ?>">
     <meta property="og:title" content="<?= strip_tags($json_data['title']) ?>"/>
     <meta property="og:image" content="<?= $json_data['imageBanner'] ?>"/>
-    <meta property="og:description" content="We're gathering all the wonderful memories captured at our wedding. If you have any photos, please share them with us here!"/>
+    <meta property="og:description" content="<?= strip_tags($json_data['description']) ?>"/>
     <meta name="twitter:title" content="<?= strip_tags($json_data['title']) ?>">
     <meta name="twitter:image" content="<?= $json_data['imageBanner'] ?>"/>
     <meta name="robots" content="nofollow">
@@ -96,8 +96,8 @@ $json_data = json_decode($json, true);
 <div class="container">
     <br>
     <p class="lead">Hello everyone!</p>
-    <p>We're gathering all the wonderful memories captured at our wedding. If you have any photos, please share them with us here!</p>
-    <p style="font-size: small">Please include your name so we can give credit. You can upload multiple pictures simultaneously using the file picker below. Videos may take a while to appear after uploading due to compression.</p>
+    <p><?= strip_tags($json_data['description']) ?></p>
+    <p style="font-size: small"><?= strip_tags($json_data['description2']) ?></p>
     <form action="#" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Your Name:</label>
@@ -147,7 +147,8 @@ $json_data = json_decode($json, true);
         }, 1000);
 
         var loadedImages = [];
-        function loadimages(){
+
+        function loadimages() {
             $.ajax({
                 url: 'load_images.php',
                 type: 'GET',
@@ -190,6 +191,7 @@ $json_data = json_decode($json, true);
                         }
                     });
                     $('#imageGallery').prepend(output).masonry('reloadItems');
+                    $('#imageGallery').masonry('layout');
                 }
             });
         }
