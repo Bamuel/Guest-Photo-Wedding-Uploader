@@ -6,7 +6,7 @@ $json_data = json_decode($json, true);
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title><?= strip_tags($json_data['title']) ?></title>
@@ -22,6 +22,12 @@ $json_data = json_decode($json, true);
     <meta name="twitter:title" content="<?= strip_tags($json_data['title']) ?>">
     <meta name="twitter:image" content="<?= $json_data['imageBanner'] ?>"/>
     <meta name="robots" content="nofollow">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="img/favicon/site.webmanifest">
+    <meta name="theme-color" content="#000000">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
@@ -83,7 +89,7 @@ $json_data = json_decode($json, true);
             margin-right: 5px;
         }
     </style>
-    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-fileinput@5.5.4/themes/explorer-fa6/theme.min.css">
 </head>
@@ -104,7 +110,7 @@ $json_data = json_decode($json, true);
             <input type="text" class="form-control" id="name" name="name" required>
         </div>
         <div class="form-group">
-            <label for="photo">Upload Photo:</label><br>
+            <label for="files">Upload Photo:</label><br>
             <input id="files" type="file" name="files" multiple accept="image/*,video/*">
         </div>
     </form>
@@ -184,7 +190,7 @@ $json_data = json_decode($json, true);
                                 html += '</div>';
                                 html += '<div id="videoError_' + fileName + '" class="w-100 shadow-1-strong rounded mb-4" style="display: none; color: red; background-color: #333333"><br><br><span style="margin-left: 10px">Your browser does not support the iOS format Videos.</span><div style="margin-left: 10px" class="btn btn-sm btn-success" onclick="window.open(\'savedimages/' + fileName + '\', \'_blank\');"><i class="fa-solid fa-download fa-fw"></i> Download</div><br><br></div>';
                             } else {
-                                html += '<img src="savedimages/' + fileName + '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" ondblclick="window.open(\'savedimages/' + fileName + '\', \'_blank\');">';
+                                html += '<img src="savedimages/' + fileName + '" class="w-100 shadow-1-strong rounded mb-4" style="border: 1px solid black;" ondblclick="window.open(\'savedimages/' + fileName + '\', \'_blank\');" alt="Image uploaded by ' + userName + '">';
                             }
                             html += '<div class="user-details">';
                             html += '<i class="' + fileIcon + '"></i>' + userName + '</div>';
