@@ -1,6 +1,8 @@
 {
   "name": "Samuel and Emma Wedding Photo Collection",
   "short_name": "Wedding Photo Collection",
+  "start_url": "/",
+  "description": "We're gathering all the wonderful memories captured at our wedding. If you have any photos, please share them with us here!",
   "icons": [
     {
       "src": "img/favicon/android-chrome-192x192.png",
