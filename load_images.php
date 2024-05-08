@@ -25,7 +25,7 @@ if (file_exists('savedimages')) {
     arsort($filesWithTimestamp); // Sort in descending order based on timestamp
 
     // Check if the user agent is from an Apple device (Mac, iPhone, iPad). This is used to display video files only on Apple devices as <img>
-    $isAppleDevice = strpos($_SERVER['HTTP_USER_AGENT'], 'Macintosh') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false;
+    $isAppleDevice = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false;
 
     $output = array();
     // Display files
