@@ -41,7 +41,7 @@ $json_data = json_decode($json, true);
             background-position: center;
             padding: 0;
             text-align: center;
-            color: white;
+            color: black;
             opacity: 0.7;
         }
 
