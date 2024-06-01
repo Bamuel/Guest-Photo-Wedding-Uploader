@@ -240,13 +240,6 @@ $json_data = json_decode($json, true);
             $('#files').fileinput('clear');
         });
     });
-    window.addEventListener("visibilitychange", function () {
-        console.log("Visibility changed");
-        if (document.visibilityState === "visible") {
-            console.log("APP resumed");
-            window.location.reload();
-        }
-    });
 </script>
 
 </body>
