@@ -14,7 +14,7 @@ for file in $originalVideoDir*; do
         fileExtension="${file##*.}"
 
         # Check if the file is a video file
-        if [ "$fileExtension" == "mov" ] || [ "$fileExtension" == "mp4" ] || [ "$fileExtension" == "avi" ] || [ "$fileExtension" == "webm" ] || [ "$fileExtension" == "mkv" ]; then
+        if [ "$fileExtension" == "mov" ] || [ "$fileExtension" == "mp4" ] || [ "$fileExtension" == "avi" ] || [ "$fileExtension" == "webm" ] || [ "$fileExtension" == "mkv" ] || [ "$fileExtension" == "MOV" ] || [ "$fileExtension" == "MP4" ] || [ "$fileExtension" == "AVI" ] || [ "$fileExtension" == "WEBM" ] || [ "$fileExtension" == "MKV" ]; then
             # Convert the video file using HandBrakeCLI
             convertedFileName=$(basename "$file" ."$fileExtension").mp4
             convertedFilePath="$uploadDir$convertedFileName"
