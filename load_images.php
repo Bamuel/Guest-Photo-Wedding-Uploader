@@ -60,6 +60,9 @@ if (file_exists('savedimages')) {
         else if (in_array(strtolower($userName), $json_data['photographers'], true)) {
             $icon = 'fa-solid fa-camera-retro fa-lg';
         }
+        else if (in_array(strtolower($userName), $json_data['dj'], true)) {
+            $icon = 'fa-solid fa-headphones fa-lg';
+        }
         else {
             $icon = 'fa-solid fa-user fa-lg';
         }
