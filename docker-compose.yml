@@ -1,0 +1,17 @@
+services:
+  apache:
+    build:
+      context: .
+      dockerfile: .docker/PHP/Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+
+  handbrake:
+    build:
+      context: .
+      dockerfile: .docker/HandBrake/Dockerfile
+    volumes:
+      - ./original_videos:/data/original_videos
+      - ./savedimages:/data/savedimages
