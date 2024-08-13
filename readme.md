@@ -1,5 +1,8 @@
 # Guest Photo Wedding Uploader
 
+[![GitHub Repo stars](https://img.shields.io/github/stars/Bamuel/guest-photo-wedding-uploader?style=social)](https://github.com/Bamuel/guest-photo-wedding-uploader)
+[![Paypal Donate](https://img.shields.io/badge/Paypal%20Donate-yellow?style=flat&logo=paypal)](https://www.paypal.com/donate/?business=RPMKJAJP63WVJ&no_recurring=0&item_name=Help+Fund+Wedding+Guest+Uploader&currency_code=AUD)
+
 Welcome to the Guest Photo Wedding Uploader! This is a simple PHP website designed to facilitate the easy uploading of photos and videos for weddings or similar events. Users can upload their media files, which will be saved on the server and made previewable for easy sharing and viewing.
 
 
