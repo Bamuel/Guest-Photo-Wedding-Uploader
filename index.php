@@ -107,7 +107,7 @@ $json_data = json_decode($json, true);
     <form action="#" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Your Name:</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+            <input type="text" class="form-control" id="name" name="name" disabled>
         </div>
         <div class="form-group">
             <label for="files">Upload Photo:</label><br>
