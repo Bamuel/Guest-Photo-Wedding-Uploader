@@ -1,38 +1,22 @@
 {
-  "title": "Samuel and Emma <br>Wedding Photo Collection",
+  "title": "S and E <br>Wedding Photo Collection",
   "imageBanner": "img/bg.png",
   "lead": "Hello everyone!",
-  "description": "We're gathering all the wonderful memories captured at our wedding. If you have any photos, please share them with us here!",
-  "description2": "Please include your name so we can give credit. You can upload multiple pictures simultaneously using the file picker below. Videos may take a while to appear after uploading due to compression.",
+  "description": "Welcome to the demo version of our wedding photo collection site! We're showcasing the features of our platform, though uploading is currently disabled. Feel free to explore and check out the functionality.",
+  "description2": "This demo allows you to see how the site will look and work with your photos. While uploading is not available right now, you can still browse through the features and get a feel for how the site will function once live.",
   "ninja": [
-    "efti",
-    "eftihios",
-    "ft",
-    "cam",
-    "camilla",
-    "cameron",
-    "hexdro",
-    "peter"
+    "ninja"
   ],
   "doctor": [
-    "art",
-    "artyom",
-    "artem",
-    "bella"
+    "doctor"
   ],
   "injured": [
-    "sofia",
-    "soffia",
-    "sofffia"
+    "injured"
   ],
   "photographers": [
-    "weila",
-    "simon",
-    "wongway",
-    "wongway studio",
-    "paulinna"
+    "photographer"
   ],
   "dj": [
-    "duta"
+    "dj"
   ]
 }

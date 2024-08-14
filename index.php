@@ -111,7 +111,7 @@ $json_data = json_decode($json, true);
         </div>
         <div class="form-group">
             <label for="files">Upload Photo:</label><br>
-            <input id="files" type="file" name="files" multiple accept="image/*,video/*">
+            <input id="files" type="file" name="files" multiple accept="image/*,video/*" disabled>
         </div>
     </form>
 </div>
