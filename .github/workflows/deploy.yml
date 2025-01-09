@@ -1,0 +1,25 @@
+name: Remote SSH Command
+
+on:
+  push:
+    branches:
+      - demo_version  # Trigger the action on push to the main branch
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    environment: staging  # Specify the environment here
+    steps:
+      - name: Execute remote SSH commands using SSH key
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}  # Use SSH key for authentication
+          port: 22  # Replace with the correct SSH port if it's not the default (22)
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}  # Use the DEPLOY_PATH secret for the project directory
+            git fetch origin  # Fetch the latest changes from the remote repository
+            git reset --hard origin/main  # Reset local changes and make local branch match the remote
+            git pull origin main  # Pull the latest changes from the remote repository
